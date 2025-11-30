@@ -2,16 +2,18 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-# Install dependencies
-COPY requirements.txt .
+# Copy requirements file and install dependencies
+COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy aplikasi
+# Copy the rest of the application code
 COPY . .
 
-# Cloud Run akan pakai PORT environment variable
+# Set environment variable for Python
+ENV PYTHONUNBUFFERED=1
 ENV PORT=8080
+
 EXPOSE 8080
 
-# Start Flask app
+# Command to start the server
 CMD ["python", "app.py"]
