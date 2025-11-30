@@ -14,19 +14,16 @@ CORS(app)
 
 # Load the model in the SavedModel format
 try:
-    # Define the directory where the model is stored
-    model_dir = "model"
+    # Base directory file ini (app.py)
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-    # Define the filename of the model
-    model_filename = "EfficientNetV2B0.h5"
+    # Path lengkap ke file model di root: ./EfficientNetV2B0.h5
+    model_path = os.path.join(BASE_DIR, "EfficientNetV2B0.h5")
 
-    # Construct the full path to the model file by joining the directory and filename
-    model_path = os.path.join(model_dir, model_filename)
-
-    # Load the TensorFlow Keras model from the specified file path
+    # Load model
     model = tf.keras.models.load_model(model_path)
 
-    print("Model loaded successfully.")
+    print(f"Model loaded successfully from: {model_path}")
 except Exception as e:
     print(f"Error loading model: {e}")
 
