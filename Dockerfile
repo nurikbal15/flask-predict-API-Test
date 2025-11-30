@@ -1,19 +1,16 @@
-FROM python:3.10-slim
+FROM python:3.11-slim
+
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-# Copy requirements file and install dependencies
-COPY requirements.txt ./
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application code
 COPY . .
 
-# Set environment variable for Python
-ENV PYTHONUNBUFFERED=1
 ENV PORT=8080
-
 EXPOSE 8080
 
-# Command to start the server
-CMD ["python", "app.py"]
+# app:app = file app.py, objek Flask bernama "app"
+CMD ["gunicorn", "-b", ":8080", "app:app"]
